@@ -1,466 +1,716 @@
-<!DOCTYPE html>
-<html lang="pt-pt">
+<!doctype html>
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Açoriana & DataVisionX - Relatório Comercial 2025</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --brand-red: #b91c1c; 
-            --brand-orange: #f97316;
-            --brand-gradient: linear-gradient(135deg, #b91c1c 0%, #f97316 100%);
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: #f8fafc;
-        }
-        .bg-brand-gradient { background: var(--brand-gradient); }
-        .text-gradient {
-            background: var(--brand-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-card {
-            background: white;
-            border-radius: 1.5rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 12px -2px rgb(0 0 0 / 0.05);
-            transition: all 0.3s ease;
-        }
-        .section-card:hover {
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            transform: translateY(-2px);
-        }
-        .metric-up { color: #10b981; }
-        .sparkline {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            animation: dash 2.5s ease-out forwards;
-        }
-        @keyframes dash {
-            to { stroke-dashoffset: 0; }
-        }
-        @keyframes grow-bar {
-            from { height: 0; }
-            to { height: var(--target-height); }
-        }
-        .bar-grow {
-            animation: grow-bar 1.5s ease-out forwards;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: var(--brand-orange);
-            border-radius: 10px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Power BI para Posto de Combustível: gestão diária, margem, estoque, conveniência e conciliação financeira." />
+  <title>Power BI para Postos | Dashboard de Gestão Completa</title>
+
+  <style>
+    :root{
+      --bg: #0b1020;
+      --bg2:#0f1733;
+      --card:#0f1a3a;
+      --muted:#a8b3cf;
+      --text:#eaf0ff;
+      --line: rgba(255,255,255,.10);
+      --brand:#7c5cff;    /* roxo */
+      --brand2:#2dd4bf;   /* verde-água */
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --good:#34d399;
+      --shadow: 0 14px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.18), transparent 55%),
+                  radial-gradient(900px 500px at 85% 10%, rgba(45,212,191,.14), transparent 55%),
+                  linear-gradient(180deg, var(--bg), #070a14 70%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(10px);
+      background: rgba(11,16,32,.60);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar .row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 30px rgba(124,92,255,.20);
+    }
+    nav{
+      display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    nav a{
+      font-size:14px; color:var(--muted);
+      padding:8px 10px; border-radius:12px;
+      transition: .2s ease;
+    }
+    nav a:hover{color:var(--text); background: rgba(255,255,255,.06)}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight:700;
+      transition: .2s ease;
+      gap:10px;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(124,92,255,.55)}
+    .btn.primary{
+      border:0;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#09102a;
+      box-shadow: 0 18px 60px rgba(124,92,255,.18);
+    }
+
+    /* Hero */
+    .hero{
+      padding:54px 0 26px;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(124,92,255,.35);
+      background: rgba(124,92,255,.10);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      width:fit-content;
+    }
+    .h1{
+      margin:14px 0 10px;
+      font-size: 46px;
+      line-height: 1.05;
+      letter-spacing: -.6px;
+    }
+    .sub{
+      margin:0 0 18px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 58ch;
+    }
+    .heroCtas{display:flex; gap:12px; flex-wrap:wrap}
+
+    .panelMock{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      min-height: 340px;
+    }
+    .panelMock .top{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 14px 10px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(15,23,51,.55);
+    }
+    .dots{display:flex; gap:6px}
+    .dot{width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.14)}
+    .panelMock .top span{font-size:13px; color:var(--muted); font-weight:700}
+    .panelMock .content{padding:14px}
+    .kpiGrid{
+      display:grid; grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    .kpi{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(7,10,20,.35);
+      padding:12px;
+    }
+    .kpi .t{color:var(--muted); font-size:12px; font-weight:700}
+    .kpi .v{margin-top:6px; font-size:18px; font-weight:900}
+    .mini{
+      margin-top:8px; height:10px; border-radius:999px;
+      background: rgba(255,255,255,.08);
+      overflow:hidden;
+    }
+    .mini > i{
+      display:block; height:100%;
+      width: var(--w, 60%);
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      border-radius:999px;
+    }
+    .note{
+      margin-top:12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height:1.45;
+    }
+
+    /* Sections */
+    section{padding:34px 0}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:12px; margin-bottom: 16px;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size: 26px;
+      letter-spacing:-.2px;
+    }
+    .sectionTitle p{margin:0; color:var(--muted); max-width:72ch; line-height:1.55}
+
+    .grid3{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid2{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+    .tagRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .tag{
+      font-size:12px; font-weight:800;
+      padding:7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+    }
+
+    .list{
+      margin:10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight:800;
+      font-size: 12px;
+    }
+    .pill i{
+      width:9px; height:9px; border-radius:999px; display:inline-block;
+      background: var(--good);
+    }
+    .pill.warn i{background: var(--warn)}
+    .pill.bad i{background: var(--bad)}
+
+    .hr{
+      height:1px; background: var(--line);
+      margin: 24px 0 0;
+    }
+
+    /* Process */
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .num{
+      width:28px; height:28px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      background: rgba(124,92,255,.14);
+      border: 1px solid rgba(124,92,255,.35);
+      color: var(--text);
+      flex: 0 0 auto;
+    }
+
+    /* Footer */
+    footer{
+      padding: 26px 0 40px;
+      color: var(--muted);
+      border-top:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    footer .row{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns: 1fr}
+      .panelMock{min-height: 320px}
+      .grid3{grid-template-columns: 1fr}
+      .grid2{grid-template-columns: 1fr}
+      .h1{font-size: 38px}
+      nav{display:none}
+    }
+  </style>
 </head>
-<body class="text-slate-900">
 
-    <!-- Navegação -->
-    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 bg-brand-gradient rounded-lg flex items-center justify-center text-white font-extrabold shadow-sm">A</div>
-                    <span class="font-extrabold text-lg uppercase tracking-tight text-slate-800">Comercial <span class="text-brand-orange">2025</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500">
-                    <a href="#performance" class="hover:text-brand-red transition">Performance</a>
-                    <a href="#positivos" class="hover:text-brand-red transition">Sucessos</a>
-                    <a href="#negativos" class="hover:text-brand-orange transition">Gaps</a>
-                    <a href="#estrategia" class="hover:text-brand-red transition">Acções</a>
-                </div>
-            </div>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <div style="font-size:14px; line-height:1; opacity:.95;">Dashboard do Posto</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700; margin-top:4px;">Power BI • Gestão diária • Margem • Estoque • Financeiro</div>
+          </div>
         </div>
-    </nav>
 
-    <!-- 1. Visão Executiva -->
-    <header id="visao" class="py-16 md:py-20 bg-white border-b border-slate-100">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="inline-block px-4 py-1.5 mb-8 text-[10px] font-black tracking-[0.25em] text-white uppercase bg-brand-gradient rounded-full shadow-sm">
-                Açoriana • Documento Estratégico
+        <nav aria-label="Navegação">
+          <a href="#o-que-voce-ve">O que você vê</a>
+          <a href="#paginas">Páginas do painel</a>
+          <a href="#dados">Dados necessários</a>
+          <a href="#implantacao">Implantação</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <a class="btn primary" href="#contato">Quero ver uma demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="heroGrid">
+          <div>
+            <div class="badge">✅ Pronto pra virar dashboard de verdade (sem “achismo”)</div>
+            <h1 class="h1">Power BI para Posto de Combustível<br/>com visão diária, margem e conciliação.</h1>
+            <p class="sub">
+              Um painel completo para você bater o olho e saber:
+              <b>está ganhando dinheiro?</b> onde está a sangria?
+              e o que precisa ajustar hoje (preço, mix, perdas, taxa, estoque).
+            </p>
+
+            <div class="heroCtas">
+              <a class="btn primary" href="#paginas">Ver estrutura do painel</a>
+              <a class="btn" href="#dados">Ver dados necessários</a>
             </div>
-            <h1 class="text-4xl md:text-6xl font-black mb-10 leading-[1.1] text-slate-900 text-center md:text-left">
-                Desempenho Comercial Anual | <br><span class="text-gradient uppercase">2024 vs 2025</span>
-            </h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-                <div class="md:col-span-2 text-lg md:text-xl text-slate-600 leading-relaxed font-light text-left">
-                    O ano de 2025 consolidou a nossa trajectória de expansão. O faturamento cresceu <strong>15,92%</strong>, superando o volume físico e provando a força da nossa estratégia de mix e recomposição de margem comercial.
-                </div>
-                <div class="p-6 bg-orange-50 rounded-3xl border border-orange-100 shadow-sm text-left">
-                    <h4 class="text-brand-orange font-black text-xs uppercase tracking-widest mb-3 leading-none">Atenção Estratégica</h4>
-                    <p class="text-sm text-slate-700 leading-relaxed font-medium">
-                        Identificamos retrações severas em redes de grande relevância e SKUs maduros, exigindo intervenção comercial imediata para sustentar o market share.
-                    </p>
-                </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="pill"><i></i> Margem & Spread</span>
+              <span class="pill warn"><i></i> Alertas (ruptura / divergência)</span>
+              <span class="pill bad"><i></i> Perdas / evaporação</span>
+              <span class="pill"><i></i> Conciliação cartões/frota</span>
             </div>
+          </div>
+
+          <div class="panelMock" aria-label="Prévia visual do dashboard (mock)">
+            <div class="top">
+              <div class="dots" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <span>Resumo Executivo • Hoje</span>
+            </div>
+            <div class="content">
+              <div class="kpiGrid">
+                <div class="kpi">
+                  <div class="t">Faturamento (Dia)</div>
+                  <div class="v">R$ 128.450</div>
+                  <div class="mini" style="--w:72%"><i></i></div>
+                </div>
+                <div class="kpi">
+                  <div class="t">Margem Bruta (Mês)</div>
+                  <div class="v">R$ 94.120 (18,2%)</div>
+                  <div class="mini" style="--w:58%"><i></i></div>
+                </div>
+                <div class="kpi">
+                  <div class="t">Volume (Semana)</div>
+                  <div class="v">312.980 L</div>
+                  <div class="mini" style="--w:66%"><i></i></div>
+                </div>
+                <div class="kpi">
+                  <div class="t">Divergência Estoque</div>
+                  <div class="v">R$ 3.840</div>
+                  <div class="mini" style="--w:34%"><i></i></div>
+                </div>
+              </div>
+              <p class="note">
+                * Valores são exemplo visual. Na sua implantação, os cards saem com seus dados reais
+                (bicos, tanques, turnos, taxas, fornecedores, etc.).
+              </p>
+            </div>
+          </div>
+
         </div>
-    </header>
-
-    <!-- 2. Insights de Performance -->
-    <section id="performance" class="py-24 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-l-4 border-brand-red pl-6">
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Painel Analítico de Resultados</h2>
-                <p class="text-slate-400 font-bold uppercase text-[10px] tracking-[0.2em] mt-2 md:mt-0">Fechamento Consolidado Jan-Dez</p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                <!-- LADO ESQUERDO: Resultado Geral -->
-                <div class="lg:col-span-7 section-card p-8 md:p-10 bg-white">
-                    <h3 class="text-lg font-extrabold text-slate-800 mb-12 flex items-center">
-                        <span class="w-1.5 h-6 bg-brand-red mr-3 rounded-full"></span> Resultado Acumulado Anual
-                    </h3>
-
-                    <div class="space-y-10 text-left">
-                        <!-- Metric Row -->
-                        <div class="flex items-center justify-between group">
-                            <div class="space-y-1">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Faturamento Total</span>
-                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">R$ 29,0M <span class="mx-2 text-slate-300 font-light">→</span> R$ 33,6M</div>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+15,92%</span>
-                                <svg class="w-20 h-8 text-emerald-500/20" viewBox="0 0 100 40">
-                                    <path d="M0 35 L20 30 L40 32 L60 20 L80 15 L100 5" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between group">
-                            <div class="space-y-1">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Volume Total (Kg/Un)</span>
-                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">6,3M <span class="mx-2 text-slate-300 font-light">→</span> 7,0M</div>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+11,80%</span>
-                                <svg class="w-20 h-8 text-emerald-500/20" viewBox="0 0 100 40">
-                                    <path d="M0 35 L20 33 L40 28 L60 25 L80 18 L100 10" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between group">
-                            <div class="space-y-1">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Positivação (Clientes Ativos)</span>
-                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">2.968 <span class="mx-2 text-slate-300 font-light">→</span> 3.449</div>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+16,21%</span>
-                                <svg class="w-20 h-8 text-emerald-500/20" viewBox="0 0 100 40">
-                                    <path d="M0 38 L20 30 L40 35 L60 22 L80 15 L100 5" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-6 mt-12 pt-10 border-t border-slate-100">
-                        <div class="p-6 bg-slate-50 rounded-2xl text-left">
-                            <p class="text-[10px] text-slate-400 font-black uppercase mb-2 tracking-widest">Preço Médio</p>
-                            <p class="text-xl md:text-2xl font-black text-brand-red tracking-tight">R$ 4,77 <span class="text-xs font-bold text-emerald-600 ml-1">↑3.7%</span></p>
-                        </div>
-                        <div class="p-6 bg-slate-50 rounded-2xl text-left">
-                            <p class="text-[10px] text-slate-400 font-black uppercase mb-2 tracking-widest">Ticket Médio</p>
-                            <p class="text-xl md:text-2xl font-black text-brand-red tracking-tight">R$ 332,36 <span class="text-xs font-bold text-emerald-600 ml-1">↑22.8%</span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- LADO DIREITO: Dezembro -->
-                <div class="lg:col-span-5 section-card p-8 md:p-10 bg-slate-900 text-white flex flex-col justify-between shadow-2xl relative overflow-hidden">
-                    <div class="absolute right-0 top-0 w-32 h-32 bg-brand-orange opacity-5 blur-3xl"></div>
-                    <div class="space-y-12 relative z-10">
-                        <div class="flex items-center space-x-3 text-left">
-                            <div class="w-1.5 h-6 bg-brand-orange rounded-full"></div>
-                            <h3 class="text-xl font-extrabold text-white leading-none">Destaque de Dezembro</h3>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                            <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Faturamento</p>
-                                <p class="text-3xl font-extrabold text-white leading-none tracking-tighter">R$ 3,33M</p>
-                                <p class="text-sm font-bold text-orange-400 mt-3 uppercase tracking-tighter">+11,58%</p>
-                            </div>
-                            <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Volume</p>
-                                <p class="text-3xl font-extrabold text-white leading-none tracking-tighter">678K</p>
-                                <p class="text-sm font-bold text-orange-400 mt-3 uppercase tracking-tighter">+11,22%</p>
-                            </div>
-                            <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors text-left leading-none">
-                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Positivação</p>
-                                <p class="text-3xl font-extrabold text-white leading-none tracking-tighter">2.491</p>
-                                <p class="text-sm font-bold text-orange-400 mt-3 uppercase tracking-tighter">+10,96%</p>
-                            </div>
-                            <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors text-left leading-none">
-                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Preço Médio</p>
-                                <p class="text-3xl font-extrabold text-white leading-none tracking-tighter">R$ 4,92</p>
-                                <p class="text-sm font-bold text-blue-300 mt-3 uppercase italic leading-none tracking-tighter">Estável</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-12 p-6 bg-white/5 rounded-3xl border border-white/10 text-left relative z-10">
-                        <p class="text-sm leading-relaxed text-slate-300 italic">
-                            <span class="text-white font-bold block mb-1 underline decoration-brand-orange underline-offset-4 uppercase tracking-tighter leading-none">Conclusão de Dezembro:</span>
-                            Crescimento 'redondo' e sustentável, validando a força da execução comercial na ponta sem queima de margem.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- 3. Fatores de Sucesso -->
-    <section id="positivos" class="py-24 bg-white text-left">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-black mb-16 text-center uppercase tracking-[0.2em] text-slate-400 italic leading-none">Fatores de Sucesso</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                
-                <!-- Card 1: Expansão -->
-                <div class="section-card p-10 bg-slate-50 flex flex-col justify-between border-b-8 border-brand-red shadow-lg">
-                    <div>
-                        <div class="w-12 h-12 bg-brand-red rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-red-100">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        </div>
-                        <h4 class="font-black text-slate-900 mb-4 text-xl">Expansão de Base</h4>
-                        <p class="text-4xl font-black text-brand-red tracking-tighter leading-none">+16,21%</p>
-                        <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest mt-2 mb-8 leading-none">Crescimento de Clientes Ativos</p>
-                    </div>
-                    <p class="text-sm text-slate-600 leading-relaxed font-medium italic leading-snug">O ganho de capilaridade regional reduziu a vulnerabilidade comercial frente aos grandes grupos, equilibrando a carteira.</p>
-                </div>
-
-                <!-- Card 2: Motor do Ano (Vendas) -->
-                <div class="section-card p-10 bg-slate-900 text-white flex flex-col justify-between shadow-xl border-b-8 border-brand-orange">
-                    <div>
-                        <h4 class="font-black text-orange-400 uppercase text-[11px] tracking-widest mb-10 text-center uppercase leading-none">Motor do Ano (Vendas)</h4>
-                        <div class="space-y-4 text-slate-100 text-left text-sm leading-none font-medium">
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-slate-400">Pão de Alho 300g</span><span class="text-emerald-400 font-black">+ 23,4%</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-slate-400">Massa Talharim 400g</span><span class="text-emerald-400 font-black">+ 16,7%</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-slate-400">Pastel DG 400g</span><span class="text-emerald-400 font-black">+ 27,7%</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-slate-400">Pastel DL 400g</span><span class="text-emerald-400 font-black">+ 27,8%</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-2 text-left">
-                                <span class="text-slate-400">Lasanha 400g</span><span class="text-emerald-400 font-black">+ 13,8%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10 text-center leading-tight">
-                        <p class="text-[9px] text-orange-300 font-black uppercase tracking-widest mb-1 leading-none">Representatividade</p>
-                        <p class="text-sm font-bold text-white uppercase tracking-tighter">TOP 5 compõem <span class="text-emerald-400 text-lg font-black italic">59%</span> do total.</p>
-                    </div>
-                </div>
-
-                <!-- Card 3: Performance por Canal (GRÁFICO QUALIFICADO) -->
-                <div class="section-card p-10 bg-white border-2 border-slate-100 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-                    <div class="relative z-10 text-left">
-                        <h4 class="font-black uppercase text-[10px] tracking-widest mb-8 text-slate-400 border-l-4 border-brand-red pl-3 leading-none uppercase">Crescimento por Canal</h4>
-                        
-                        <!-- Gráfico Visual de Crescimento -->
-                        <div class="flex items-end justify-around h-44 mb-10 pt-4 bg-slate-50/50 rounded-[2rem] relative border border-slate-100 shadow-inner">
-                            <!-- Bar 1: Redes -->
-                            <div class="flex flex-col items-center group w-1/3">
-                                <div class="relative w-full px-2">
-                                    <div class="bg-brand-red w-full rounded-t-2xl shadow-lg bar-grow relative" style="--target-height: 140px; height: 0;">
-                                        <div class="absolute -top-9 left-1/2 -translate-x-1/2 bg-brand-red text-white text-[10px] font-black px-2 py-1 rounded shadow-lg whitespace-nowrap leading-none tracking-tighter animate-pulse">
-                                            +18,5%
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="mt-3 text-[10px] font-black text-slate-900 uppercase tracking-tighter leading-none">REDES</span>
-                                <span class="text-[8px] font-bold text-slate-400 uppercase mt-1 leading-none tracking-tighter">29.6% share</span>
-                            </div>
-
-                            <!-- Bar 2: Varejo -->
-                            <div class="flex flex-col items-center group w-1/3 text-left">
-                                <div class="relative w-full px-2 text-left">
-                                    <div class="bg-slate-300 w-full rounded-t-2xl shadow-md bar-grow opacity-80" style="--target-height: 110px; height: 0;">
-                                        <div class="absolute -top-9 left-1/2 -translate-x-1/2 bg-slate-700 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg whitespace-nowrap leading-none tracking-tighter">
-                                            +14,9%
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="mt-3 text-[10px] font-black text-slate-900 uppercase tracking-tighter leading-none">VAREJO</span>
-                                <span class="text-[8px] font-bold text-slate-400 uppercase mt-1 leading-none tracking-tighter">70.4% share</span>
-                            </div>
-                        </div>
-
-                        <!-- Ticket Médio Detail -->
-                        <div class="p-4 bg-slate-900 rounded-[2rem] shadow-xl text-left border border-white/10 group overflow-hidden relative">
-                            <div class="absolute right-0 top-0 opacity-10 p-2 text-white"><svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path></svg></div>
-                            <p class="text-[9px] font-black uppercase text-brand-orange tracking-widest mb-1 leading-none">Ticket Médio Redes</p>
-                            <p class="text-2xl font-black text-white italic tracking-tighter leading-none">R$ 1.035,60</p>
-                            <p class="text-[10px] text-emerald-400 font-bold mt-2 leading-none">Ganho real: +R$ 74,09 p/ pedido</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="o-que-voce-ve">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>O que você vê no painel</h2>
+          <p>
+            A estrutura foi pensada para gestão de posto de verdade: <b>venda + margem + estoque + taxas + dinheiro no caixa</b>.
+            Tudo com comparativos (M-1, YoY, YTD) e alertas.
+          </p>
         </div>
+
+        <div class="grid3">
+          <div class="card">
+            <h3>Gestão diária (pra decidir rápido)</h3>
+            <p>Cards e semáforos para enxergar queda de volume, margem abaixo da meta, ruptura e divergência de estoque.</p>
+            <div class="tagRow">
+              <span class="tag">Dia/Semana/Mês</span>
+              <span class="tag">Média móvel</span>
+              <span class="tag">Alertas</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Margem que manda (e onde ela some)</h3>
+            <p>Margem por produto (R$/L), por pagamento (PIX, crédito, frota), taxas e impacto direto no resultado.</p>
+            <div class="tagRow">
+              <span class="tag">Spread</span>
+              <span class="tag">Mix</span>
+              <span class="tag">Taxas cartão</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Operação sem susto (estoque e tanques)</h3>
+            <p>Dias de cobertura, ponto de reposição, entrada x saída, divergência físico x sistema e perdas estimadas.</p>
+            <div class="tagRow">
+              <span class="tag">Cobertura</span>
+              <span class="tag">Ruptura</span>
+              <span class="tag">Perdas</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 4. Pontos Negativos / Gaps (REDES EM QUEDA ACTUALIZADO) -->
-    <section id="negativos" class="py-24 bg-slate-50 border-y border-slate-200 text-left">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-black mb-16 text-center uppercase tracking-[0.2em] text-brand-red leading-none">Zonas de Intervenção Crítica</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- PRODUTOS BAIXO DESEMPENHO -->
-                <div class="section-card p-8 border-t-[10px] border-brand-red text-left">
-                    <h4 class="font-black text-red-600 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] leading-none">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                        PRODUTOS BAIXO DESEMPENHO
-                    </h4>
-                    <div class="space-y-3">
-                        <div class="p-4 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
-                            <div class="leading-none"><p class="font-bold text-slate-800 text-sm tracking-tighter">Batata Palha 70g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
-                            <span class="text-xl font-black text-red-600 tracking-tighter">-30,2%</span>
-                        </div>
-                        <div class="p-4 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
-                            <div class="leading-none"><p class="font-bold text-slate-800 text-sm tracking-tighter">Batata Palha 400g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
-                            <span class="text-xl font-black text-red-600 tracking-tighter">-16,7%</span>
-                        </div>
-                        <div class="p-4 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
-                            <div class="leading-none"><p class="font-bold text-slate-800 text-sm tracking-tighter">Milho Queijo 120g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
-                            <span class="text-xl font-black text-red-600 tracking-tighter">-23,8%</span>
-                        </div>
-                        <div class="p-4 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
-                            <div class="leading-none"><p class="font-bold text-slate-800 text-sm tracking-tighter">Milho Cebola 120g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
-                            <span class="text-xl font-black text-red-600 tracking-tighter">-25,4%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- REDES EM QUEDA (DADOS EXATOS) -->
-                <div class="section-card p-8 border-t-[10px] border-slate-800">
-                    <h4 class="font-black text-slate-800 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] leading-none">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"></path></svg>
-                        REDES EM QUEDA
-                    </h4>
-                    <div class="bg-slate-900 text-white p-6 rounded-[2.5rem] mb-6 shadow-xl border border-white/5">
-                        <div class="text-brand-orange font-black text-xs mb-6 italic tracking-widest uppercase text-center border-b border-white/10 pb-3 leading-none">Mapeamento Crítico</div>
-                        
-                        <div class="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar text-left">
-                            <div class="flex justify-between items-center group border-b border-white/5 pb-2">
-                                <span class="text-[11px] font-bold text-slate-300">GRUPO LANZ</span>
-                                <span class="text-red-500 font-black text-[12px] tracking-tighter">- 26,8%</span>
-                            </div>
-                            <div class="flex flex-col group border-b border-white/5 pb-2">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-[11px] font-bold text-white uppercase tracking-tighter italic">MONACO</span>
-                                    <span class="text-red-500 font-black text-[12px] tracking-tighter">- 11,5%</span>
-                                </div>
-                                <div class="mt-2 space-y-1">
-                                    <span class="block text-red-400 font-black text-[9px] uppercase tracking-widest leading-none italic tracking-tighter">• Contrato encerrado (Dez/25)</span>
-                                    <span class="block text-slate-400 font-bold text-[9px] uppercase leading-none italic tracking-tighter">• Peso faturamento: 8,06%</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center group border-b border-white/5 pb-2">
-                                <span class="text-[11px] font-bold text-slate-300 uppercase leading-none">SUPER BARATO</span>
-                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 10,2%</span>
-                            </div>
-                            <div class="flex justify-between items-center group border-b border-white/5 pb-2">
-                                <span class="text-[11px] font-bold text-slate-300 uppercase leading-none">NUNES</span>
-                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 8,1%</span>
-                            </div>
-                            <div class="flex justify-between items-center group border-b border-white/5 pb-2">
-                                <span class="text-[11px] font-bold text-slate-300 uppercase leading-none">ACERTE</span>
-                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 3,7%</span>
-                            </div>
-                            <div class="flex justify-between items-center group">
-                                <span class="text-[11px] font-bold text-slate-300 uppercase leading-none">MULLER</span>
-                                <span class="text-orange-400 font-black text-[12px] tracking-tighter">2,2%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-500 italic px-2 text-center leading-snug">Auditoria imediata nas razões de saída e proposta comercial de retomada agressiva.</p>
-                </div>
-
-                <!-- Rotas em Alerta -->
-                <div class="section-card p-8 border-t-[10px] border-brand-orange text-left leading-none">
-                    <h4 class="font-black text-orange-600 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] leading-none">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 1.586l-4.586 4.586L4 2.172 2.172 4 5.586 7.414 1.172 11.828 4 14.656l4.414-4.414 4.414 4.414 2.828-2.828-4.414-4.414L16 3.172 12 1.586z" clip-rule="evenodd"></path></svg>
-                        Sinais Mistos por Rota
-                    </h4>
-                    <div class="space-y-6 text-left leading-none">
-                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50">
-                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0 animate-pulse"></span>
-                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug"><strong>Grupo 01:</strong> Rotas 13 e 06 operando com volume físico negativo em relação ao ano anterior.</p>
-                        </div>
-                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50">
-                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0"></span>
-                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug"><strong>Rota 14:</strong> Queda crítica na positivação e perda severa de base ativa.</p>
-                        </div>
-                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50">
-                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0"></span>
-                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug font-medium italic"><strong>Grupo 02:</strong> Perda de volume mascarada por sucessivos ajustes de ticket médio.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="paginas">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Páginas do dashboard (modelo pronto)</h2>
+          <p>Do jeito que você listou: cada página com objetivo claro, KPIs e visuais recomendados.</p>
         </div>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>1) Visão Geral (Diretoria / Dono)</h3>
+            <p><b>Objetivo:</b> saber se está ganhando dinheiro e onde está o problema.</p>
+            <ul class="list">
+              <li>Faturamento (Dia/Semana/Mês/YTD), Volume, Ticket médio, Qtde abastecimentos</li>
+              <li>Margem bruta (R$ e %) total e por combustível</li>
+              <li>Perdas estimadas (estoque x vendas, evaporação, quebras)</li>
+              <li>Alertas: margem abaixo da meta, volume caiu, divergência acima do limite</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>2) Comercial e Vendas (Combustíveis)</h3>
+            <p><b>Objetivo:</b> entender o que vende, quando vende e o que puxa volume.</p>
+            <ul class="list">
+              <li>Volume e faturamento por produto (Gasolina, Etanol, Diesel S10/S500, GNV)</li>
+              <li>Mix (%), margem (R$/L) e margem total (R$)</li>
+              <li>Vendas por turno e por dia da semana</li>
+              <li>Visuais: linha (volume diário + média móvel), barras (margem), heatmap (dia x turno)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>3) Precificação e Competitividade (opcional)</h3>
+            <p><b>Objetivo:</b> medir impacto de preço no volume e na margem.</p>
+            <ul class="list">
+              <li>Preço bomba vs custo (compra) e spread (R$/L)</li>
+              <li>Preço vs concorrência (posição e diferença em centavos)</li>
+              <li>Elasticidade simples (tendência preço x volume)</li>
+              <li>Alertas: spread abaixo do mínimo; preço acima do mercado e volume caindo</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>4) Estoque, Compras e Tanques</h3>
+            <p><b>Objetivo:</b> evitar ruptura, excesso e perdas.</p>
+            <ul class="list">
+              <li>Estoque por tanque/produto (L) + dias de cobertura</li>
+              <li>Entrada x saída; divergência físico x sistema (L e R$)</li>
+              <li>Rupturas e impacto em vendas</li>
+              <li>Visuais: “medidor de tanque” (gauge), curva de estoque + ponto de reposição</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>5) Rentabilidade (o painel que manda)</h3>
+            <p><b>Objetivo:</b> mostrar onde o lucro nasce e onde morre.</p>
+            <ul class="list">
+              <li>Margem por produto (R$/L) e total (R$)</li>
+              <li>Margem por forma de pagamento + taxas e impacto</li>
+              <li>Top 10 dias melhores/piores</li>
+              <li>“O que mudou?” (decomposição: preço, custo, mix, volume)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>6) Conveniência / Loja (se existir)</h3>
+            <p><b>Objetivo:</b> subir ticket e margem fora da bomba.</p>
+            <ul class="list">
+              <li>Faturamento e margem da loja; ticket médio; itens por compra</li>
+              <li>Top produtos (faturamento e margem)</li>
+              <li>Perdas/Quebras/Validade (R$)</li>
+              <li>Combos / associação (A + B no mesmo cupom)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>7) Fidelidade e Clientes (se tiver CPF)</h3>
+            <p><b>Objetivo:</b> retenção e recorrência.</p>
+            <ul class="list">
+              <li>Clientes únicos; recorrência (voltou em 30 dias)</li>
+              <li>Frequência média (dias entre abastecimentos)</li>
+              <li>LTV simples (gasto médio por cliente)</li>
+              <li>Segmentos: frotista, varejo, recorrente, ocasional</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>8) Financeiro e Conciliação (muito importante)</h3>
+            <p><b>Objetivo:</b> bater vendas x recebíveis x taxas.</p>
+            <ul class="list">
+              <li>Recebido vs vendido; pendente (cartões/frotas)</li>
+              <li>Taxas por bandeira/adquirente; chargeback/divergências</li>
+              <li>Prazo médio de recebimento (PMR)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>9) Qualidade de dados & Alertas</h3>
+            <p><b>Objetivo:</b> confiança no número (e ação rápida).</p>
+            <ul class="list">
+              <li>Ruptura, divergência estoque, outliers de preço/ticket, bicos sem venda, etc.</li>
+              <li>Painel de “pendências de integração” (o que não chegou no BI)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 6. Plano de Intervenção -->
-    <section id="estrategia" class="py-24 bg-brand-gradient text-white text-center md:text-left shadow-inner border-0">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-4xl font-black mb-16 text-center tracking-tight text-white uppercase tracking-widest leading-none">Plano Estratégico 2026</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl flex flex-col hover:scale-105 transition duration-500">
-                    <span class="w-12 h-12 bg-brand-red text-white flex items-center justify-center rounded-2xl font-black mb-8 shadow-xl mx-auto md:mx-0 uppercase">A</span>
-                    <h4 class="text-slate-900 font-black mb-6 uppercase text-[10px] tracking-widest leading-none text-center md:text-left">Blindar Motores</h4>
-                    <p class="text-slate-600 text-sm flex-grow leading-relaxed text-center md:text-left leading-snug">Política de Ruptura Zero nos SKUs Motores. Garantir stock absoluto onde o volume é garantido.</p>
-                    <div class="mt-8 pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-black uppercase tracking-widest text-center uppercase tracking-widest text-center md:text-left">Pão Alho / Massas</div>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl flex flex-col hover:scale-105 transition duration-500">
-                    <span class="w-12 h-12 bg-brand-orange text-white flex items-center justify-center rounded-2xl font-black mb-8 shadow-xl mx-auto md:mx-0">B</span>
-                    <h4 class="text-slate-900 font-black mb-6 uppercase text-[10px] tracking-widest leading-none text-center md:text-left">Acção de Giro</h4>
-                    <p class="text-slate-600 text-sm flex-grow leading-relaxed text-center md:text-left leading-snug">Ciclo intensivo de 30 dias para reativar Batata Palha e Salgadões. Foco em pricing estratégico.</p>
-                    <div class="mt-8 pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-black uppercase tracking-widest text-center md:text-left uppercase">Recuperação SKUs</div>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl flex flex-col hover:scale-105 transition duration-500">
-                    <span class="w-12 h-12 bg-brand-red text-white flex items-center justify-center rounded-2xl font-black mb-8 shadow-xl mx-auto md:mx-0 text-center md:text-left leading-none">C</span>
-                    <h4 class="text-slate-900 font-black mb-6 uppercase text-[10px] tracking-widest leading-none text-center md:text-left">Auditoria Rede</h4>
-                    <p class="text-slate-600 text-sm flex-grow leading-relaxed text-center md:text-left leading-snug font-medium italic">Auditoria presencial nos pontos com queda crítica (Grupo Lanz e Monaco).</p>
-                    <div class="mt-8 pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-black uppercase tracking-widest text-center md:text-left uppercase">Meta 60 Dias</div>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl flex flex-col hover:scale-105 transition duration-500 text-center md:text-left">
-                    <span class="w-12 h-12 bg-brand-orange text-white flex items-center justify-center rounded-2xl font-black mb-8 shadow-xl mx-auto md:mx-0 text-center md:text-left">D</span>
-                    <h4 class="text-slate-900 font-black mb-6 uppercase text-[10px] tracking-widest leading-none text-center md:text-left text-left leading-none">Gestão Rotas</h4>
-                    <p class="text-slate-600 text-sm flex-grow leading-relaxed text-center md:text-left leading-snug">Intervenção tática nas rotas críticas (13, 06, 14). Ativar capilaridade e frequência.</p>
-                    <div class="mt-8 pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-black uppercase tracking-widest text-center md:text-left uppercase">Gestão Direta</div>
-                </div>
-            </div>
+    <section id="dados">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Dados necessários (o básico que faz o BI funcionar bem)</h2>
+          <p>Se você tiver isso, o painel roda liso. Se não tiver, a gente monta o “plano B” com o que existir (planilha/ERP/PDV).</p>
         </div>
+
+        <div class="grid3">
+          <div class="card">
+            <h3>Vendas (cupom/abastecimento)</h3>
+            <ul class="list">
+              <li>Data/hora, produto, litros, preço, valor</li>
+              <li>Bico/bomba, operador/turno</li>
+              <li>Forma de pagamento</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Compras / Notas</h3>
+            <ul class="list">
+              <li>Data, produto, litros, custo</li>
+              <li>Frete (se tiver), fornecedor</li>
+              <li>Entrada por tanque</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Tanques / Estoque físico</h3>
+            <ul class="list">
+              <li>Movimentação, aferição, estoque físico</li>
+              <li>Divergência físico x sistema</li>
+              <li>Rupturas / abastecimento do tanque</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Financeiro / Cartões</h3>
+            <ul class="list">
+              <li>Taxas, bandeiras, adquirente</li>
+              <li>Recebíveis e conciliação</li>
+              <li>Prazo de recebimento</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>(Opcional) Concorrência</h3>
+            <ul class="list">
+              <li>Planilha simples com preços diários</li>
+              <li>Postos concorrentes e localização</li>
+              <li>Produto x preço</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Comparativos (padrão)</h3>
+            <ul class="list">
+              <li>Mês atual vs M-1</li>
+              <li>Mês atual vs mesmo mês A/A (YoY)</li>
+              <li>YTD e Meta vs Realizado</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-24 bg-white border-t border-slate-100 text-center">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-4xl font-black text-slate-900 italic mb-12 tracking-tight leading-snug text-center">
-                "2026 exige blindar os pilares de volume e <br>estancar as quedas silenciosas que consomem a margem."
-            </h2>
-            <div class="flex justify-center space-x-4 mb-10 text-center">
-                <div class="h-2 w-24 bg-brand-red rounded-full shadow-sm"></div>
-                <div class="h-2 w-12 bg-brand-orange rounded-full shadow-sm"></div>
-                <div class="h-2 w-6 bg-slate-200 rounded-full shadow-sm"></div>
-            </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.6em] text-center italic tracking-widest leading-none uppercase">Açoriana & DataVisionX • Janeiro 2026</p>
+    <section id="implantacao">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Como a implantação acontece (sem enrolação)</h2>
+          <p>Processo enxuto para colocar o painel rodando rápido — e com qualidade.</p>
         </div>
-    </footer>
 
+        <div class="grid2">
+          <div class="card">
+            <div class="step">
+              <div class="num">1</div>
+              <div>
+                <h3>Mapeamento dos dados</h3>
+                <p>Entender de onde vem cada informação (PDV, planilhas, notas, tanques, adquirente) e fechar o “dicionário” dos campos.</p>
+              </div>
+            </div>
+            <div class="hr"></div>
+            <div class="step" style="margin-top:14px;">
+              <div class="num">2</div>
+              <div>
+                <h3>Modelo e medidas (DAX)</h3>
+                <p>Montar o modelo estrela, calendário, comparativos (M-1/YoY/YTD) e regras de margem/spread/perdas.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="step">
+              <div class="num">3</div>
+              <div>
+                <h3>Dashboard + alertas</h3>
+                <p>Construção das páginas com foco em decisão (sem poluir), com alertas de ruptura, divergência e margem abaixo da meta.</p>
+              </div>
+            </div>
+            <div class="hr"></div>
+            <div class="step" style="margin-top:14px;">
+              <div class="num">4</div>
+              <div>
+                <h3>Validação e entrega</h3>
+                <p>Conferência com o responsável, ajustes finais, e entrega com orientação de uso (o que olhar todo dia/semana/mês).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill"><i></i> Dashboard limpo e rápido</span>
+          <span class="pill warn"><i></i> Regras claras de cálculo</span>
+          <span class="pill bad"><i></i> Menos “número errado”</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Quer transformar isso em painel real?</h2>
+          <p>Me chama e eu te devolvo uma demo com a estrutura já montada (cards, páginas e comparativos), faltando só plugar os teus dados.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Contato rápido</h3>
+            <p>Edite abaixo com seus dados (WhatsApp / e-mail / site).</p>
+            <div class="tagRow">
+              <span class="tag">📱 WhatsApp: (xx) xxxxx-xxxx</span>
+              <span class="tag">✉️ Email: seuemail@dominio.com</span>
+              <span class="tag">🌐 Site: seudominio.com</span>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="#" onclick="alert('Troque esse botão pelo seu link do WhatsApp (wa.me)'); return false;">Falar no WhatsApp</a>
+              <a class="btn" href="#" onclick="alert('Troque esse botão por um link de calendário ou formulário'); return false;">Agendar 15 min</a>
+            </div>
+
+            <p class="note">Dica: no WhatsApp use link wa.me/55DDDNUMERO (sem espaços).</p>
+          </div>
+
+          <div class="card">
+            <h3>Checklist para começar</h3>
+            <ul class="list">
+              <li>Export do PDV (vendas por abastecimento / cupom)</li>
+              <li>Notas de compra (litros, custo, fornecedor)</li>
+              <li>Controle de tanques (aferição / estoque físico)</li>
+              <li>Relatórios do adquirente (taxas, recebíveis)</li>
+            </ul>
+            <p class="note">
+              Se você já tem isso em planilha/ERP, ótimo. Se não tiver, a gente monta um modelo simples de coleta e automatiza.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="row">
+        <div>© <span id="y"></span> • Power BI para Postos • Página de apresentação</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#paginas">Estrutura do painel</a>
+          <a class="btn" href="#dados">Dados necessários</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Ano automático
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Scroll suave (para navegadores que não suportam CSS nativo)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
 </body>
 </html>

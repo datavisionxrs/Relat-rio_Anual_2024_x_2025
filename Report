@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Comercial 2025 - Relatório Estratégico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #b91c1c; 
+            --brand-orange: #f97316;
+            --brand-gradient: linear-gradient(135deg, #b91c1c 0%, #f97316 100%);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc;
+        }
+        .bg-brand-gradient { background: var(--brand-gradient); }
+        .text-gradient {
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-card {
+            background: white;
+            border-radius: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px -2px rgb(0 0 0 / 0.05);
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            transform: translateY(-2px);
+        }
+        .metric-up { color: #10b981; }
+        .sparkline {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: dash 2.5s ease-out forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--brand-orange);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navegação -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 bg-brand-gradient rounded-lg flex items-center justify-center text-white font-extrabold shadow-sm">A</div>
+                    <span class="font-extrabold text-lg uppercase tracking-tight text-slate-800">Estratégico <span class="text-brand-orange">2025</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500">
+                    <a href="#performance" class="hover:text-brand-red transition">Performance</a>
+                    <a href="#positivos" class="hover:text-brand-red transition">Sucessos</a>
+                    <a href="#negativos" class="hover:text-brand-orange transition">Gaps</a>
+                    <a href="#estrategia" class="hover:text-brand-red transition">Acções</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Visão Executiva -->
+    <header id="visao" class="py-20 bg-white border-b border-slate-100">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="inline-block px-4 py-1.5 mb-8 text-[10px] font-black tracking-[0.25em] text-white uppercase bg-brand-gradient rounded-full shadow-sm">
+                Documento Interno • Alta Gestão
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black mb-10 leading-[1.1] text-slate-900 text-center md:text-left">
+                Desempenho Comercial Anual | <br><span class="text-gradient">AÇORIANA: 2024 vs 2025</span>
+            </h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+                <div class="md:col-span-2 text-xl text-slate-600 leading-relaxed font-light text-left">
+                    O ano de 2025 consolidou a nossa trajectória de expansão. O faturamento cresceu <strong>15,92%</strong>, superando o volume físico e provando a força da nossa estratégia de mix e recomposição de margem comercial.
+                </div>
+                <div class="p-6 bg-orange-50 rounded-3xl border border-orange-100 shadow-sm text-left">
+                    <h4 class="text-brand-orange font-black text-xs uppercase tracking-widest mb-3">Ponto de Atenção</h4>
+                    <p class="text-sm text-slate-700 leading-relaxed font-medium">
+                        Crescimento não homogéneo: identificamos retrações em redes de grande relevância e SKUs maduros.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Insights de Performance -->
+    <section id="performance" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight text-center md:text-left">Painel de Performance Analítica</h2>
+                <p class="text-slate-500 font-medium border-l-2 border-brand-red pl-4 mt-2 md:mt-0 uppercase text-[10px] tracking-widest text-center md:text-left">Consolidado Financeiro e Operacional</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- LADO ESQUERDO: Resultado Geral -->
+                <div class="lg:col-span-7 section-card p-10 bg-white">
+                    <div class="flex items-center space-x-3 mb-12 text-center md:text-left">
+                        <div class="w-3 h-8 bg-brand-red rounded-full"></div>
+                        <h3 class="text-xl font-extrabold text-slate-800">Resultado Acumulado (Jan–Dez)</h3>
+                    </div>
+
+                    <div class="space-y-10 text-left">
+                        <div class="flex items-center justify-between group">
+                            <div class="space-y-1 text-left">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Faturamento Total</span>
+                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">R$ 29,0M <span class="mx-2 text-slate-300 font-light">→</span> R$ 33,6M</div>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+15,92%</span>
+                                <svg class="w-24 h-10 text-emerald-500/30" viewBox="0 0 100 40">
+                                    <path d="M0 35 L20 30 L40 32 L60 20 L80 15 L100 5" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between group">
+                            <div class="space-y-1 text-left">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Volume (Kg/Un)</span>
+                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">6,3M <span class="mx-2 text-slate-300 font-light">→</span> 7,0M</div>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+11,80%</span>
+                                <svg class="w-24 h-10 text-emerald-500/30" viewBox="0 0 100 40">
+                                    <path d="M0 35 L20 33 L40 28 L60 25 L80 18 L100 10" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between group">
+                            <div class="space-y-1 text-left">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Positivação Ativa</span>
+                                <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter italic">2.968 <span class="mx-2 text-slate-300 font-light">→</span> 3.449</div>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xl md:text-2xl font-black text-emerald-500 leading-none">+16,21%</span>
+                                <svg class="w-24 h-10 text-emerald-500/30" viewBox="0 0 100 40">
+                                    <path d="M0 38 L20 30 L40 35 L60 22 L80 15 L100 5" fill="none" stroke="currentColor" stroke-width="4" class="sparkline" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 pt-10 border-t border-slate-100">
+                        <div class="p-6 bg-slate-50 rounded-2xl text-left">
+                            <p class="text-[10px] text-slate-400 font-black uppercase mb-2 tracking-widest">Preço Médio</p>
+                            <p class="text-2xl font-black text-brand-red">R$ 4,77 <span class="text-xs font-bold text-emerald-600 ml-1">↑3.7%</span></p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl text-left">
+                            <p class="text-[10px] text-slate-400 font-black uppercase mb-2 tracking-widest">Ticket Médio</p>
+                            <p class="text-2xl font-black text-brand-red">R$ 332,36 <span class="text-xs font-bold text-emerald-600 ml-1">↑22.8%</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LADO DIREITO: Dezembro -->
+                <div class="lg:col-span-5 section-card p-10 bg-slate-900 text-white flex flex-col justify-between shadow-2xl">
+                    <div class="space-y-12">
+                        <div class="flex items-center space-x-3 text-left">
+                            <div class="w-3 h-8 bg-brand-orange rounded-full"></div>
+                            <h3 class="text-xl font-extrabold text-white leading-none">Fechamento Dezembro</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+                            <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Faturamento</p>
+                                <p class="text-3xl font-extrabold text-white leading-none">R$ 3,33M</p>
+                                <p class="text-sm font-bold text-orange-400 mt-2 tracking-widest uppercase">+11,58%</p>
+                            </div>
+                            <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Volume</p>
+                                <p class="text-3xl font-extrabold text-white leading-none">678K</p>
+                                <p class="text-sm font-bold text-orange-400 mt-2 tracking-widest uppercase">+11,22%</p>
+                            </div>
+                            <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Positivação</p>
+                                <p class="text-3xl font-extrabold text-white leading-none">2.491</p>
+                                <p class="text-sm font-bold text-orange-400 mt-2 tracking-widest uppercase">+10,96%</p>
+                            </div>
+                            <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em] mb-4 leading-none">Preço Médio</p>
+                                <p class="text-3xl font-extrabold text-white leading-none">R$ 4,92</p>
+                                <p class="text-sm font-bold text-blue-300 mt-2 tracking-widest uppercase italic leading-none">Estável</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 p-6 bg-white/10 rounded-3xl border border-white/10 text-center">
+                        <p class="text-sm leading-relaxed text-slate-300 italic">
+                            <span class="text-white font-bold block mb-1 underline decoration-brand-orange underline-offset-4 uppercase tracking-tighter">Performance Mensal:</span>
+                            Crescimento 'redondo' e equilibrado em faturamento e volume.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Fatores de Sucesso -->
+    <section id="positivos" class="py-24 bg-white text-left">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-black mb-16 text-center uppercase tracking-[0.2em] text-slate-400 italic">Fatores de Sucesso</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                
+                <!-- Expansão de Base -->
+                <div class="section-card p-10 bg-slate-50 flex flex-col justify-between border-b-8 border-brand-red">
+                    <div>
+                        <div class="w-12 h-12 bg-brand-red rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-red-100 mx-auto md:mx-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <h4 class="font-black text-slate-900 mb-4 text-xl">Expansão de Base</h4>
+                        <p class="text-4xl font-black text-brand-red tracking-tighter">+16,21%</p>
+                        <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest mt-1 mb-6 leading-none">Crescimento de Clientes Ativos</p>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed italic font-medium leading-snug text-left">Pulverização estratégica de risco comercial e ganho real de capilaridade regional em 2025.</p>
+                </div>
+
+                <!-- Motor do Ano -->
+                <div class="section-card p-10 bg-slate-900 text-white flex flex-col justify-between shadow-xl border-b-8 border-brand-orange">
+                    <div>
+                        <h4 class="font-black text-orange-400 uppercase text-[11px] tracking-widest mb-10 text-center uppercase leading-none">Motor do Ano (Vendas)</h4>
+                        <div class="space-y-4 text-slate-100 text-left">
+                            <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span class="font-medium text-slate-300">Pão de Alho 300g</span>
+                                <span class="text-emerald-400 font-black tracking-tighter">+ 23,4%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span class="font-medium text-slate-300">Massa Talharim 400g</span>
+                                <span class="text-emerald-400 font-black tracking-tighter">+ 16,7%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span class="font-medium text-slate-300">Pastel DG 400g</span>
+                                <span class="text-emerald-400 font-black tracking-tighter">+ 27,7%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span class="font-medium text-slate-300">Pastel DL 400g</span>
+                                <span class="text-emerald-400 font-black tracking-tighter">+ 27,8%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span class="font-medium text-slate-300">Lasanha 400g</span>
+                                <span class="text-emerald-400 font-black tracking-tighter">+ 13,8%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
+                        <p class="text-[10px] text-orange-300 font-black uppercase tracking-widest mb-1 leading-none">Representatividade</p>
+                        <p class="text-sm font-bold text-white uppercase italic tracking-tighter">TOP 5 compõem <span class="text-emerald-400 text-lg font-black">59%</span> do total.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Performance por Canal (RAIO-X REDES VS VAREJO) - REVISADO -->
+                <div class="section-card p-10 bg-white border-2 border-slate-100 flex flex-col justify-between shadow-lg relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-5 p-4 text-slate-900">
+                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    </div>
+                    <div class="relative z-10 text-left">
+                        <h4 class="font-black uppercase text-[10px] tracking-widest mb-10 text-slate-400 border-l-4 border-brand-red pl-3 leading-none">Performance por Canal</h4>
+                        
+                        <div class="space-y-12">
+                            <!-- Canal Redes -->
+                            <div class="group">
+                                <div class="flex justify-between items-end mb-3">
+                                    <div>
+                                        <p class="text-[10px] font-black uppercase tracking-widest text-brand-red leading-none mb-1">Crescimento Redes</p>
+                                        <p class="text-3xl font-black italic tracking-tighter text-slate-900 leading-none">29,6% <span class="text-[10px] font-bold text-slate-400 not-italic uppercase tracking-widest ml-1">share</span></p>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-lg font-black tracking-tighter">+18,53%</div>
+                                    </div>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                                    <div class="h-full bg-brand-red w-[29.6%] shadow-[2px_0_10px_rgba(185,28,28,0.3)]"></div>
+                                </div>
+                            </div>
+
+                            <!-- Canal Varejo -->
+                            <div class="group">
+                                <div class="flex justify-between items-end mb-3">
+                                    <div>
+                                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 leading-none mb-1">Crescimento Varejo</p>
+                                        <p class="text-3xl font-black italic tracking-tighter text-slate-900 leading-none">70,4% <span class="text-[10px] font-bold text-slate-400 not-italic uppercase tracking-widest ml-1">share</span></p>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-lg font-black tracking-tighter">+14,86%</div>
+                                    </div>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden shadow-inner text-left">
+                                    <div class="h-full bg-slate-400 w-[70.4%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative z-10 mt-12 p-6 bg-slate-900 rounded-[2rem] shadow-xl text-left">
+                        <p class="text-[11px] font-bold leading-relaxed text-slate-300 italic">
+                            <span class="text-brand-orange uppercase not-italic block mb-2 tracking-[0.2em] font-black text-[9px] leading-none">Diagnóstico:</span>
+                            O Varejo mantém a hegemonia de volume (70%), enquanto o Canal Redes opera como acelerador de faturamento e ticket médio qualificado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Pontos Negativos / Gaps -->
+    <section id="negativos" class="py-24 bg-slate-50 border-y border-slate-200 text-left">
+        <div class="max-w-7xl mx-auto px-4 text-center md:text-left">
+            <h2 class="text-2xl font-black mb-16 text-center uppercase tracking-[0.2em] text-brand-red leading-none">Zonas de Intervenção Crítica</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- PRODUTOS COM BAIXO DESEMPENHO -->
+                <div class="section-card p-8 border-t-[10px] border-brand-red text-left">
+                    <h4 class="font-black text-red-600 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] leading-none">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                        PRODUTOS BAIXO DESEMPENHO
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="p-5 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
+                            <div><p class="font-bold text-slate-800 text-sm leading-none">Batata Palha 70g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
+                            <span class="text-xl font-black text-red-600 tracking-tighter">-30,2%</span>
+                        </div>
+                        <div class="p-5 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group">
+                            <div><p class="font-bold text-slate-800 text-sm leading-none">Batata Palha 400g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
+                            <span class="text-xl font-black text-red-600 tracking-tighter">-16,7%</span>
+                        </div>
+                        <div class="p-5 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group text-left">
+                            <div><p class="font-bold text-slate-800 text-sm leading-none">Milho Queijo 120g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Faturamento</p></div>
+                            <span class="text-xl font-black text-red-600 tracking-tighter">-23,8%</span>
+                        </div>
+                        <div class="p-5 bg-red-50 rounded-2xl border border-red-100 flex justify-between items-center group text-left">
+                            <div><p class="font-bold text-slate-800 text-sm leading-none">Milho Cebola 120g</p><p class="text-[10px] font-black text-red-600 uppercase tracking-tighter mt-1 leading-none">Indicador</p></div>
+                            <span class="text-xl font-black text-red-600 tracking-tighter">-25,4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REDES EM QUEDA -->
+                <div class="section-card p-8 border-t-[10px] border-slate-800">
+                    <h4 class="font-black text-slate-800 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] justify-center md:justify-start leading-none">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"></path></svg>
+                        REDES EM QUEDA
+                    </h4>
+                    <div class="bg-slate-900 text-white p-6 rounded-[2.5rem] mb-6 shadow-xl border border-white/5">
+                        <div class="text-brand-orange font-black text-xs mb-6 italic tracking-widest uppercase text-center border-b border-white/10 pb-3 leading-none">Retração Analítica</div>
+                        
+                        <div class="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar text-left">
+                            <div class="flex justify-between items-center group border-b border-white/5 pb-2">
+                                <span class="text-[11px] font-bold text-slate-300 uppercase tracking-tighter">GRUPO LANZ</span>
+                                <span class="text-red-500 font-black text-[12px] tracking-tighter">- 26,8%</span>
+                            </div>
+                            
+                            <div class="flex flex-col group border-b border-white/5 pb-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[11px] font-bold text-white uppercase tracking-tighter">MONACO</span>
+                                    <span class="text-red-500 font-black text-[12px] tracking-tighter">- 11,5%</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <span class="block text-red-400 font-black text-[9px] uppercase tracking-widest leading-none italic">• Contrato encerrado (Dez/25)</span>
+                                    <span class="block text-slate-400 font-bold text-[9px] uppercase leading-none italic tracking-tighter">• Peso faturamento: 8,06%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group border-b border-white/5 pb-2 text-left">
+                                <span class="text-[11px] font-bold text-slate-300 uppercase tracking-tighter leading-none">SUPER BARATO</span>
+                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 10,2%</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group border-b border-white/5 pb-2 text-left leading-none">
+                                <span class="text-[11px] font-bold text-slate-300 uppercase tracking-tighter leading-none">NUNES</span>
+                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 8,1%</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group border-b border-white/5 pb-2 text-left leading-none">
+                                <span class="text-[11px] font-bold text-slate-300 uppercase tracking-tighter leading-none">ACERTE</span>
+                                <span class="text-red-400 font-black text-[12px] tracking-tighter">- 3,7%</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group text-left leading-none">
+                                <span class="text-[11px] font-bold text-slate-300 uppercase tracking-tighter leading-none">MULLER</span>
+                                <span class="text-orange-400 font-black text-[12px] tracking-tighter">2,2%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rotas em Alerta -->
+                <div class="section-card p-8 border-t-[10px] border-brand-orange text-left">
+                    <h4 class="font-black text-orange-600 mb-8 flex items-center uppercase text-[10px] tracking-[0.2em] leading-none text-left">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 1.586l-4.586 4.586L4 2.172 2.172 4 5.586 7.414 1.172 11.828 4 14.656l4.414-4.414 4.414 4.414 2.828-2.828-4.414-4.414L16 3.172 12 1.586z" clip-rule="evenodd"></path></svg>
+                        Sinais Mistos por Rota
+                    </h4>
+                    <div class="space-y-6 text-left">
+                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50">
+                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0 animate-pulse"></span>
+                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug"><strong>Grupo 01:</strong> Rotas 13 e 06 operando com volume físico negativo em relação ao ano anterior.</p>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50">
+                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0"></span>
+                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug"><strong>Rota 14:</strong> Queda crítica na positivação e perda severa de base ativa.</p>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 bg-orange-50/30 rounded-2xl border border-orange-100/50 text-left">
+                            <span class="w-3 h-3 bg-brand-orange rounded-full mt-1 flex-shrink-0"></span>
+                            <p class="text-xs text-slate-700 leading-relaxed text-left leading-snug"><strong>Grupo 02:</strong> Perda de volume físico mascarada por sucessivos ajustes de ticket médio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 bg-white border-t border-slate-100 text-center">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-black text-slate-900 italic mb-12 tracking-tight leading-snug">
+                "2026 exige blindar os pilares de volume e <br>estancar as quedas silenciosas que consomem a margem."
+            </h2>
+            <div class="flex justify-center space-x-4 mb-10 text-center">
+                <div class="h-2 w-24 bg-brand-red rounded-full shadow-sm"></div>
+                <div class="h-2 w-12 bg-brand-orange rounded-full shadow-sm"></div>
+                <div class="h-2 w-6 bg-slate-200 rounded-full shadow-sm"></div>
+            </div>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.6em] text-center italic tracking-widest">Açoriana & DataVisionX • Janeiro 2026</p>
+        </div>
+    </footer>
+
+</body>
+</html>
